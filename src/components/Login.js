@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -8,6 +9,7 @@ const Login = () => {
             password: ''
         }
     });
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         setUser({
@@ -18,23 +20,31 @@ const Login = () => {
             }
         })
     }
-    
-    const handleSubmit = (e) => {
+
+    const handleLogin = (e) => {
         e.preventDefault();
-        console.log(user)
+        axios.post(`http://localhost:5000/api/login`, user.credentials)
+            .then(res => {
+                localStorage.setItem("token", res.data.token)
+            })
+            .catch(err => {
+                console.log(err);
+                setError("Invalid Login Information");
+            })
     }
-    
+
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
             {/* <FormGroup> */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin}>
                 <Label htmlFor="username">Username
                     {/* <Input> */}
                         <input
                             type="text"
                             name="username"
+                            id="username"
                             value={user.credentials.username}
                             onChange={handleChange}
                         />
@@ -44,16 +54,19 @@ const Login = () => {
                         <input 
                             type="text"
                             name="password"
+                            id="password"
                             value={user.credentials.password}
                             onChange={handleChange}
                         />
                 </Label>
                 {/* <Button> */}
-                    <button>Submit</button>
+                    <button id="submit">Submit</button>
                 {/* </Button> */}
             </form>
             {/* </FormGroup> */}
-
+        {
+            !error ? <p></p> : <p>{error}</p>    
+        }
         </ModalContainer>
     </ComponentContainer>);
 }
