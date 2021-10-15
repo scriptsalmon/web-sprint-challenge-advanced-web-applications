@@ -19,7 +19,6 @@ const EditForm = (props)=> {
             .get(`http://localhost:5000/api/articles/${editId}`)
                 .then(res => {
                     setArticle(res.data);
-                    console.log(res.data);
                 })
                 .catch(err => {
                     console.log(err);
