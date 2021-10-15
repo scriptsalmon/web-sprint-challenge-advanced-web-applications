@@ -5,7 +5,7 @@ import axios from 'axios';
 import Article from './Article';
 import EditForm from './EditForm';
 
-import articleServices from './../services/articleServices';
+// import articleServices from './../services/articleServices';
 import axiosWithAuth from './../utils/axiosWithAuth';
 
 const View = (props) => {
@@ -17,8 +17,7 @@ const View = (props) => {
         axiosWithAuth()
         .get(`http://localhost:5000/api/articles`)
             .then(res => {
-                const serviceRes = res.data;
-                setArticles(serviceRes);
+                setArticles(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -26,6 +25,16 @@ const View = (props) => {
     }, [])
 
     const handleDelete = (id) => {
+        console.log("deleted!")
+        axiosWithAuth()
+        .delete(`http://localhost:5000/api/articles/${id}`)
+            .then(res => {
+                console.log(res.data);
+                setArticles(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     const handleEdit = (article) => {
