@@ -1,12 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
+    const [user, setUser] = useState({
+        credentials: {
+            username: '',
+            password: ''
+        }
+    });
+
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            credentials: {
+                ...user.credentials,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(user)
+    }
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            {/* <FormGroup> */}
+            <form onSubmit={handleSubmit}>
+                <Label htmlFor="username">Username
+                    {/* <Input> */}
+                        <input
+                            type="text"
+                            name="username"
+                            value={user.credentials.username}
+                            onChange={handleChange}
+                        />
+                    {/* </Input> */}
+                </Label>
+                <Label htmlFor="password">Password
+                        <input 
+                            type="text"
+                            name="password"
+                            value={user.credentials.password}
+                            onChange={handleChange}
+                        />
+                </Label>
+                {/* <Button> */}
+                    <button>Submit</button>
+                {/* </Button> */}
+            </form>
+            {/* </FormGroup> */}
+
         </ModalContainer>
     </ComponentContainer>);
 }
