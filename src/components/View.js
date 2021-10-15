@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Article from './Article';
 import EditForm from './EditForm';
 
 import articleServices from './../services/articleServices';
+import axiosWithAuth from './../utils/axiosWithAuth';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
@@ -12,7 +14,15 @@ const View = (props) => {
     const [editId, setEditId] = useState();
 
     useEffect(() => {
-        articleServices();
+        axiosWithAuth()
+        .get(`http://localhost:5000/api/articles`)
+            .then(res => {
+                const serviceRes = res.data;
+                setArticles(serviceRes);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }, [])
 
     const handleDelete = (id) => {
