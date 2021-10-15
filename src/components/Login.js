@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
         }
     });
     const [error, setError] = useState(null);
+    const { push } = useHistory();
 
     const handleChange = (e) => {
         setUser({
@@ -25,7 +27,10 @@ const Login = () => {
         e.preventDefault();
         axios.post(`http://localhost:5000/api/login`, user.credentials)
             .then(res => {
-                localStorage.setItem("token", res.data.token)
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("username", res.data.username);
+                // localStorage.setItem("role", res.data.role);
+                push('/view');
             })
             .catch(err => {
                 console.log(err);
@@ -65,7 +70,7 @@ const Login = () => {
             </form>
             {/* </FormGroup> */}
         {
-            !error ? <p></p> : <p>{error}</p>    
+            !error ? <p></p> : <p id="error">{error}</p>    
         }
         </ModalContainer>
     </ComponentContainer>);
