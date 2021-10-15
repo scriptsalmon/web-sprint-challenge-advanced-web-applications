@@ -24,7 +24,6 @@ const View = (props) => {
     }, [])
 
     const handleDelete = (id) => {
-        console.log("deleted!")
         axiosWithAuth()
         .delete(`http://localhost:5000/api/articles/${id}`)
             .then(res => {
@@ -39,7 +38,6 @@ const View = (props) => {
         axiosWithAuth()
         .put(`http://localhost:5000/api/articles/${editId}`, article)
             .then(res => {
-                console.log(res.data);
                 setArticles(res.data);
             })
             .catch(err => {

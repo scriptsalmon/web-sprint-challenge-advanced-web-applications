@@ -1,5 +1,4 @@
 import React from 'react';
-// import { render, screen } from '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
@@ -20,7 +19,7 @@ test('renders component without errors', () => {
 });
 
 test('renders headline, author from the article when passed in through props', () => {
-    render(<Article article={testArticle} />);
+    render(<Article article={testArticle}/>);
     //arrange
     const headline = screen.queryByTestId('headline');
     const author = screen.queryByTestId('author');
