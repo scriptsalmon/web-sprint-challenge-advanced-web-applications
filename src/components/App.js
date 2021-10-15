@@ -26,7 +26,7 @@ const App = () => {
         </PrivateRoute>  
         <PrivateRoute path="/logout">
           <Logout />  
-        </PrivateRoute>       
+        </PrivateRoute>   
       </RouteContainer>
     </AppContainer>
   )
